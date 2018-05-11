@@ -12,13 +12,19 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+
+        config.enableStompBrokerRelay("/queue", "/test").setRelayHost("localhost").
+                setRelayPort(61613).setSystemHeartbeatSendInterval(
+                20000).setSystemHeartbeatReceiveInterval(20000);
         config.setApplicationDestinationPrefixes("/app");
+       /* config.enableSimpleBroker("/topic");
+        config.setApplicationDestinationPrefixes("/app");*/
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gs-guide-websocket").withSockJS();
+
     }
 
 }
